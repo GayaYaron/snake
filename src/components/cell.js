@@ -1,4 +1,4 @@
-import "../styles/cell.css";
+import "../styles/game.css";
 import { connect } from "react-redux";
 
 function CellComp(props) {
