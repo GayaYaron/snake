@@ -2,21 +2,22 @@ import "../styles/game.css";
 import { connect } from "react-redux";
 
 function CellComp(props) {
-    const getBackColor = () => {
+    const getCellClass = () => {
+        let classString = "cell ";
         switch (props.role) {
             case "BORDER":
-                return props.colors.border;
+                return classString + props.colors.border;
             case "FOOD":
-                return props.colors.food;
+                return classString + props.colors.food;
             case "SNAKE":
-                return props.colors.snake;
+                return classString + props.colors.snake;
             default:
-                return "#FFFFFF"
+                return classString + "backDefault";
         }
     }
 
     return (
-        <div className="cell" style={{backgroundColor: getBackColor()}}></div>
+        <div className={getCellClass()}></div>
     )
 }
 
