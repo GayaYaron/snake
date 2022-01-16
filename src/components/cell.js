@@ -14,8 +14,9 @@ function CellComp(props) {
                 return "#FFFFFF"
         }
     }
+
     return (
-        <div className="cell" style={{backgroundColor: {getBackColor()}}}></div>
+        <div className="cell" style={{backgroundColor: getBackColor()}}></div>
     )
 }
 
