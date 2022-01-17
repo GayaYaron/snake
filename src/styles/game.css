@@ -21,6 +21,10 @@
     background-color: red;
 }
 
+.backGrey {
+    background-color: gray;
+}
+
 .gamePage {
     margin-top: 5px;
     display: grid;
