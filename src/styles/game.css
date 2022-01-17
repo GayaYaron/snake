@@ -4,6 +4,7 @@
 }
 
 .board {
+    width: 100%;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
 }
@@ -19,4 +20,8 @@
 
 .backDefault {
     background-color: white;
+}
+
+.backRed {
+    background-color: red;
 }

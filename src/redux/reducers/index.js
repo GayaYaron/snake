@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-const gameColorsReducer = (currentState = {border: null, snake: null, food: null}, action) => {
+const gameColorsReducer = (currentState = {border: "backBlack", snake: "backBlack", food: "backRed"}, action) => {
     switch(action.type) {
         case "GAME-COLOR/BORDER":
             return {...currentState, border: action.payload};

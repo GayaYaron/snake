@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Cell } from "./cell";
 
 function GameComp(props) {
-    const [cells, setCells] = useState([]);
+    const [snakeCells, setSnakeCells] = useState([226,227,228]);
+    const [foodCell, setFoodCell] = useState(197);
 
     const cols = 17;
     const rows = 22;
@@ -11,12 +12,21 @@ function GameComp(props) {
     const createCells = () => {
         const cellArr = [];
         for(let i=0; i<boardSize; i++) {
-            cellArr.push(<Cell key={i} role={}/>);
+            cellArr.push(<Cell key={i} role={getRole(i)}/>);
         }
+        return cellArr;
     }
 
-    const getInitialRoles = (index) => {
-        
+    const getRole = (index) => {
+        if(foodCell === index){
+                return "FOOD";
+        }else if(snakeCells.includes(index)){
+            return "SNAKE";
+        }else if(isBorder(index)){
+            return "BORDER";
+        }else {
+            return "EMPTY";
+        }
     }
 
     const isBorder = (index) => {
@@ -31,7 +41,7 @@ function GameComp(props) {
 
     return (
         <div className="board">
-
+            {createCells()}
         </div>
     )
 }
