@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Cell } from "./cell";
 
-function GameComp(props) {
+export function Game(props) {
     const [snakeCells, setSnakeCells] = useState([226,227,228]);
     const [foodCell, setFoodCell] = useState(197);
 
@@ -30,7 +30,7 @@ function GameComp(props) {
     }
 
     const isBorder = (index) => {
-        const insideBoard = (index>0) && (index<boardSize);
+        const insideBoard = (index>=0) && (index<boardSize);
         const isTopRow = index<cols;
         const isLeftCol = index%cols===0;
         const isBottomRow = index>cols*(rows-1);
