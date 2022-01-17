@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Cell } from "./cell";
 import "../styles/game.css"
 
 export function Game(props) {
-    const [snakeCells, setSnakeCells] = useState([226,227,228]);
-    const [foodCell, setFoodCell] = useState(197);
+    const [snakeCells, setSnakeCells] = useState([]);
+    const [foodCell, setFoodCell] = useState(0);
 
     const cols = 17;
     const rows = 17;
     const boardSize = cols*rows;
+
+    useEffect(() => {
+        setInitialValues()
+    },[]);
+
+    const setInitialValues = () => {
+        setSnakeCells([226,227,228]);
+        setFoodCell(197);
+    }
 
     const createCells = () => {
         const cellArr = [];
