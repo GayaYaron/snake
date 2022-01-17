@@ -4,15 +4,9 @@
 }
 
 .board {
-    width: 100%;
-    max-width: 100vh;
+    max-width: 100%;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
-}
-
-.row {
-    width: 100%;
-    display: flex;
 }
 
 .backBlack {
@@ -27,3 +21,8 @@
     background-color: red;
 }
 
+.gamePage {
+    display: grid;
+    row-gap: 10px;
+    grid-template-rows: auto 20%;
+}

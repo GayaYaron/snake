@@ -2,7 +2,7 @@ import { Game } from "../components/game";
 
 export function GamePage(props) {
     return (
-        <div className="no-scroll">
+        <div className="gamePage">
             <Game />
         </div>
     )
