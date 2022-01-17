@@ -1,4 +1,5 @@
 import { Game } from "../components/game";
+import "../styles/game.css";
 
 export function GamePage(props) {
     return (
