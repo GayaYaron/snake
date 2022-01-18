@@ -1,100 +1,108 @@
 import { useEffect, useState } from "react";
 import { Cell } from "./cell";
 import "../styles/game.css"
+import { GamePosition } from "../model/GamePosition";
 
 export function Game(props) {
-    const [snakeCells, setSnakeCells] = useState([]);
-    const [foodCell, setFoodCell] = useState(0);
+    const [currentPosition, setCurrentPosition] = useState(null);
     const [direction, setDirection] = useState("");
 
     const cols = 17;
     const rows = 17;
-    const boardSize = cols*rows;
-    const easyMillis = 1000;
+    const boardSize = cols * rows;
     const playing = false;
 
     useEffect(() => {
         setInitialValues()
-    },[]);
+    }, []);
+
+    useEffect(() => {
+        if(playing) {
+            setTimeout(move, currentPosition.delay);
+        }
+    }, [currentPosition])
 
     const setInitialValues = () => {
-        setSnakeCells([226,227,228]);
-        setHeadTail({head : 228, tail : 226});
-        setFoodCell(197);
+        setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000))
         setDirection("R");
     }
 
     const createCells = () => {
         const cellArr = [];
-        for(let i=0; i<boardSize; i++) {
-            cellArr.push(<Cell key={i} role={getRole(i)}/>);
+        for (let i = 0; i < boardSize; i++) {
+            cellArr.push(<Cell key={i} role={getRole(i)} />);
         }
         return cellArr;
     }
 
     const getRole = (index) => {
-        if(foodCell === index){
-                return "FOOD";
-        }else if(snakeCells.includes(index)){
+        if (currentPosition.food === index) {
+            return "FOOD";
+        } else if (currentPosition.snake.includes(index)) {
             return "SNAKE";
-        }else if(isBorder(index)){
+        } else if (isBorder(index)) {
             return "BORDER";
-        }else {
+        } else {
             return "EMPTY";
         }
     }
 
     const isBorder = (index) => {
-        const insideBoard = (index>=0) && (index<boardSize);
-        const isTopRow = index<cols;
-        const isLeftCol = index%cols===0;
-        const isBottomRow = index>cols*(rows-1);
-        const isRightCol = (index+1)%cols===0;
+        const insideBoard = (index >= 0) && (index < boardSize);
+        const isTopRow = index < cols;
+        const isLeftCol = index % cols === 0;
+        const isBottomRow = index > cols * (rows - 1);
+        const isRightCol = (index + 1) % cols === 0;
 
         return insideBoard && (isTopRow || isLeftCol || isBottomRow || isRightCol);
     }
 
-    const delaySetPlaying = (value) => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-              resolve(value);
-            }, easyMillis);
-          });
-    }
-
     const nextHeadCell = () => {
-        let nextCell = snakeCells[snakeCells.length-1];
-        switch(direction) {
+        let nextCell = currentPosition.snake[currentPosition.snake.length - 1];
+        switch (direction) {
             case "R":
-                nextCell+=1;
+                nextCell += 1;
             case "U":
-                nextCell-=cols;
+                nextCell -= cols;
             case "D":
-                nextCell+=cols;
+                nextCell += cols;
             default:
-                nextCell-=1;
+                nextCell -= 1;
         }
         return nextCell;
     }
 
-    const move = async () => {
-        while(playing) {
-            let isAlive = true;
-            const headNext = nextHeadCell();
-            while(playing) {
-                let newCells = snakeCells;
-                newCells = newCells.push(headNext);
-                let tailIndex = 1;
-                if(headNext === foodCell) {
-                    tailIndex = 0;
-                }else if(snakeCells.includes(headNext) || isBorder(headNext)) {
-                    isAlive = false;
-                }
-                newCells = newCells.slice(tailIndex, newCells.length);
-                playing = await delaySetPlaying(isAlive);
-                
-            }
+    const move = () => {
+        let isAlive = true;
+        const headNext = nextHeadCell();
+        let snakeCells = currentPosition.snake;
+        let tailIndex = 1;
+        let foodIndex = currentPosition.food;
+        let delayMilli = currentPosition.delay;
+        if (headNext === foodCell) {
+            tailIndex = 0;
+            foodIndex = generateFood();
+            delayMilli*=0.8;
+        } else if (!isEmpty(headNext)) {
+            isAlive = false;
         }
+        snakeCells = snakeCells.push(headNext);
+        snakeCells = snakeCells.slice(tailIndex, snakeCells.length);
+        playing = isAlive;
+        setCurrentPosition(new GamePosition(snakeCells, foodIndex));
+    }
+
+    const isEmpty = (index) => {
+        const snakeCells = currentPosition.snake;
+        return !(snakeCells.includes(index) || isBorder(index));
+    }
+
+    const generateFood = () => {
+        let randomPlace = Math.random() * boardSize;
+        while(!isEmpty(randomPlace)) {
+            randomPlace = Math.random() * boardSize;
+        }
+        return randomPlace;
     }
 
     return (
