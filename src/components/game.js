@@ -13,27 +13,32 @@ export function Game(props) {
     const playing = false;
 
     useEffect(() => {
-        setInitialValues()
-    }, []);
-
-    useEffect(() => {
         if(playing) {
             setTimeout(move, currentPosition.delay);
         }
-    }, [currentPosition])
+    }, [currentPosition]);
 
     const setInitialValues = () => {
         setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000))
         setDirection("R");
-    }
+    };
 
     const createCells = () => {
-        const cellArr = [];
-        for (let i = 0; i < boardSize; i++) {
-            cellArr.push(<Cell key={i} role={getRole(i)} />);
+        if (currentPosition === null) {
+            setInitialValues();
+            return (
+                <div>
+                    Loading game...
+                </div>
+            )
+        } else {
+            const cellArr = [];
+            for (let i = 0; i < boardSize; i++) {
+                cellArr.push(<Cell key={i} role={getRole(i)} />);
+            }
+            return cellArr;
         }
-        return cellArr;
-    }
+    };
 
     const getRole = (index) => {
         if (currentPosition.food === index) {
@@ -62,10 +67,13 @@ export function Game(props) {
         switch (direction) {
             case "R":
                 nextCell += 1;
+                break;
             case "U":
                 nextCell -= cols;
+                break;
             case "D":
                 nextCell += cols;
+                break;
             default:
                 nextCell -= 1;
         }
@@ -78,18 +86,18 @@ export function Game(props) {
         let snakeCells = currentPosition.snake;
         let tailIndex = 1;
         let foodIndex = currentPosition.food;
-        let delayMilli = currentPosition.delay;
-        if (headNext === foodCell) {
+        let delayMillis = currentPosition.delay;
+        if (headNext === foodIndex) {
             tailIndex = 0;
             foodIndex = generateFood();
-            delayMilli*=0.8;
+            delayMillis *= 0.8;
         } else if (!isEmpty(headNext)) {
             isAlive = false;
         }
         snakeCells = snakeCells.push(headNext);
         snakeCells = snakeCells.slice(tailIndex, snakeCells.length);
         playing = isAlive;
-        setCurrentPosition(new GamePosition(snakeCells, foodIndex));
+        setCurrentPosition(new GamePosition(snakeCells, foodIndex, delayMillis));
     }
 
     const isEmpty = (index) => {
@@ -99,7 +107,7 @@ export function Game(props) {
 
     const generateFood = () => {
         let randomPlace = Math.random() * boardSize;
-        while(!isEmpty(randomPlace)) {
+        while (!isEmpty(randomPlace)) {
             randomPlace = Math.random() * boardSize;
         }
         return randomPlace;
