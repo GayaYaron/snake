@@ -10,7 +10,7 @@ export function Game(props) {
     const cols = 17;
     const rows = 17;
     const boardSize = cols * rows;
-    const playing = false;
+    let playing = false;
 
     useEffect(() => {
         if(playing) {
@@ -87,6 +87,7 @@ export function Game(props) {
         let tailIndex = 1;
         let foodIndex = currentPosition.food;
         let delayMillis = currentPosition.delay;
+        
         if (headNext === foodIndex) {
             tailIndex = 0;
             foodIndex = generateFood();
@@ -102,7 +103,7 @@ export function Game(props) {
 
     const isEmpty = (index) => {
         const snakeCells = currentPosition.snake;
-        return !(snakeCells.includes(index) || isBorder(index));
+        return !(snakeCells.includes(index) || isBorder(index) || (index === currentPosition.food));
     }
 
     const generateFood = () => {

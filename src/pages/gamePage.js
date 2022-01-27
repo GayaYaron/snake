@@ -5,6 +5,8 @@ export function GamePage(props) {
     return (
         <div className="gamePage">
             <Game />
+            <div className="">
+            </div>
         </div>
     )
 }
