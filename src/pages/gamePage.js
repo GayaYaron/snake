@@ -120,7 +120,7 @@ export function GamePage(props) {
             <div className="board">
                 {createCells()}
             </div>
-            <div>
+            <div className="mx-auto">
                 <ArrowGrid arrowClick={(arrow)=>{setDirection(arrow)}} />
             </div>
         </div>
