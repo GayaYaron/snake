@@ -114,14 +114,14 @@ export function GamePage(props) {
         }
         return randomPlace;
     }
-
+ 
     return (
         <div className="gamePage">
             <div className="board">
                 {createCells()}
             </div>
             <div>
-                <ArrowGrid />
+                <ArrowGrid arrowClick={(arrow)=>{setDirection(arrow)}} />
             </div>
         </div>
     )
