@@ -1,15 +1,22 @@
 export function ArrowGrid(props) {
+    const buttonCol = (clickFunc, iconString) => {
+        return (
+            <div className="col-auto">
+                <button className="btn btn-secondary" onClick={clickFunc}><i className={iconString}></i></button>
+            </div>
+        )
+    }
     return (
         <div className="container">
             <div className="row">
                 <div className="col" />
-                <button className="col btn btn-secondary" onClick={props.upClicked}><i className="fas fa-arrow-up"></i></button>
+                {buttonCol(props.upClicked, "fas fa-arrow-up")}
                 <div className="col" />
             </div>
             <div className="row">
-                <button className="col btn btn-secondary" onClick={props.leftClicked}><i className="fas fa-arrow-left"></i></button>
-                <button className="col btn btn-secondary" onClick={props.downClicked}><i className="fas fa-arrow-down"></i></button>
-                <button className="col btn btn-secondary" onClick={props.rightClicked}><i className="fas fa-arrow-right"></i></button>
+                {buttonCol(props.leftClicked, "fas fa-arrow-left")}
+                {buttonCol(props.downClicked, "fas fa-arrow-down")}
+                {buttonCol(props.rightClicked, "fas fa-arrow-right")}
             </div>
         </div>
     )
