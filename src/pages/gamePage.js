@@ -5,22 +5,21 @@ import { GamePosition } from "../model/GamePosition";
 import { ArrowGrid } from "../components/arrowGrid";
 
 export function GamePage(props) {
-    const [currentPosition, setCurrentPosition] = useState(null);
+    const [currentPosition, setCurrentPosition] = useState(new GamePosition([], 0, 0, false));
     const [direction, setDirection] = useState("");
 
     const cols = 17;
     const rows = 17;
     const boardSize = cols * rows;
-    let playing = false;
 
     useEffect(() => {
-        if (playing) {
+        if (currentPosition.playing) {
             setTimeout(move, currentPosition.delay);
         }
     }, [currentPosition]);
 
     const setInitialValues = () => {
-        setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000))
+        setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000, false))
         setDirection("R");
     };
 
@@ -98,8 +97,7 @@ export function GamePage(props) {
         }
         snakeCells = snakeCells.push(headNext);
         snakeCells = snakeCells.slice(tailIndex, snakeCells.length);
-        playing = isAlive;
-        setCurrentPosition(new GamePosition(snakeCells, foodIndex, delayMillis));
+        setCurrentPosition(new GamePosition(snakeCells, foodIndex, delayMillis, isAlive));
     }
 
     const isEmpty = (index) => {
@@ -116,14 +114,14 @@ export function GamePage(props) {
     }
 
     const arrowClicked = (arrow) => {
-        if(playing) {
+        if(currentPosition.playing) {
             setDirection(arrow);
         }
     } 
 
     const playBtnClass = () => {
         return(
-            playing ? "d-none" : "btn btn-success position-absolute top-50 start-50 translate-middle"
+            currentPosition.playing ? "d-none" : "btn btn-success position-absolute top-50 start-50 translate-middle"
         )
     }
  
