@@ -120,11 +120,18 @@ export function GamePage(props) {
             setDirection(arrow);
         }
     } 
+
+    const playBtnClass = () => {
+        return(
+            playing ? "d-none" : "btn btn-success position-absolute top-50 start-50 translate-middle"
+        )
+    }
  
     return (
         <div className="gamePage">
-            <div className="board">
+            <div className="board position-relative">
                 {createCells()}
+                <button type="button" className={playBtnClass()}>Start Game</button>
             </div>
             <div className="mx-auto w-third">
                 <ArrowGrid arrowClick={arrowClicked} />
