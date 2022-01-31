@@ -114,21 +114,14 @@ export function GamePage(props) {
         }
         return randomPlace;
     }
-
-    const arrowClicked = (arrow) => {
-        setDirection(arrow);
-    }
  
     return (
         <div className="gamePage">
             <div className="board">
                 {createCells()}
             </div>
-            <div>
-                Checking icons <i className="fas fa-concierge-bell"></i>
-            </div>
-            <div className="mx-auto">
-                <ArrowGrid arrowClick={arrowClicked} />
+            <div className="mx-auto w-third">
+                <ArrowGrid arrowClick={setDirection} />
             </div>
         </div>
     )

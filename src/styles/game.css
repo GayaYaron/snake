@@ -31,3 +31,19 @@
     row-gap: 10px;
     grid-template-rows: auto 20%;
 }
+
+.w-third {
+    width: calc(100%/3);
+}
+
+.w-full {
+    width: 100%;
+}
+
+.arrowBtn {
+    display: block;
+}
+
+.arrowBtn:hover {
+    box-shadow: 0 0 2px 1px black;
+}

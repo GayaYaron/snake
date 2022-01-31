@@ -1,10 +1,10 @@
+import "../styles/game.css";
+
 export function ArrowGrid(props) {
-    const buttonCol = (direction, iconString) => {
+    const buttonCol = (direction, imgSrc) => {
         return (
-            <div className="col-auto">
-                <button className="btn btn-secondary" onClick={() => { props.arrowClick(direction) }}>
-                    <i className={iconString}></i>
-                </button>
+            <div className="col">
+                <img src={imgSrc} className="arrowBtn w-full" alt={direction} onClick={() => { props.arrowClick(direction) }} />
             </div>
         )
     }
@@ -13,13 +13,13 @@ export function ArrowGrid(props) {
         <div className="container">
             <div className="row">
                 <div className="col" />
-                {buttonCol("U", "fas fa-arrow-up")}
+                {buttonCol("U", "/upArrow.png")}
                 <div className="col" />
             </div>
             <div className="row">
-                {buttonCol("L", "fas fa-arrow-left")}
-                {buttonCol("D", "fas fa-arrow-down")}
-                {buttonCol("R", "fas fa-arrow-right")}
+                {buttonCol("L", "/leftArrow.png")}
+                {buttonCol("D", "/downArrow.png")}
+                {buttonCol("R", "/rightArrow.png")}
             </div>
         </div>
     )
