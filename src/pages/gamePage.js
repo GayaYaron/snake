@@ -14,6 +14,7 @@ export function GamePage(props) {
 
     useEffect(() => {
         if (currentPosition?.playing) {
+            console.log(currentPosition);
             setTimeout(move, currentPosition.delay);
         }
     }, [currentPosition]);
@@ -95,7 +96,7 @@ export function GamePage(props) {
         } else if (!isEmpty(headNext)) {
             isAlive = false;
         }
-        snakeCells = snakeCells.push(headNext);
+        snakeCells.push(headNext);
         snakeCells = snakeCells.slice(tailIndex, snakeCells.length);
         setCurrentPosition(new GamePosition(snakeCells, foodIndex, delayMillis, isAlive));
     }
@@ -106,7 +107,7 @@ export function GamePage(props) {
     }
 
     const generateFood = () => {
-        let randomPlace = Math.random() * boardSize;
+        let randomPlace = Math.floor(Math.random() * boardSize);
         while (!isEmpty(randomPlace)) {
             randomPlace = Math.random() * boardSize;
         }
@@ -124,8 +125,12 @@ export function GamePage(props) {
         return(
             currentPosition?.playing ? 
             <button type="button" className={"btn btn-danger "+locationClass}>End Game</button> :
-            <button type="button" className={"btn btn-success "+locationClass}>Start Game</button>
+            <button type="button" className={"btn btn-success "+locationClass} onClick={play}>Start Game</button>
         )
+    }
+
+    const play = () => {
+        setCurrentPosition({...currentPosition, playing:true})
     }
  
     return (
