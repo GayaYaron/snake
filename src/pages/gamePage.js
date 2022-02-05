@@ -5,7 +5,7 @@ import { GamePosition } from "../model/GamePosition";
 import { ArrowGrid } from "../components/arrowGrid";
 
 export function GamePage(props) {
-    const [currentPosition, setCurrentPosition] = useState(new GamePosition([], 0, 0, false));
+    const [currentPosition, setCurrentPosition] = useState(null);
     const [direction, setDirection] = useState("");
 
     const cols = 17;
@@ -13,7 +13,7 @@ export function GamePage(props) {
     const boardSize = cols * rows;
 
     useEffect(() => {
-        if (currentPosition.playing) {
+        if (currentPosition?.playing) {
             setTimeout(move, currentPosition.delay);
         }
     }, [currentPosition]);
@@ -119,19 +119,22 @@ export function GamePage(props) {
         }
     } 
 
-    const playBtnClass = () => {
+    const playBtn = () => {
+        const locationClass = "d-block mx-auto mb-2";
         return(
-            currentPosition.playing ? "d-none" : "btn btn-success position-absolute top-50 start-50 translate-middle"
+            currentPosition?.playing ? 
+            <button type="button" className={"btn btn-danger "+locationClass}>End Game</button> :
+            <button type="button" className={"btn btn-success "+locationClass}>Start Game</button>
         )
     }
  
     return (
         <div className="gamePage">
-            <div className="board position-relative">
+            <div className="board">
                 {createCells()}
-                <button type="button" className={playBtnClass()}>Start Game</button>
             </div>
             <div className="mx-auto w-third">
+                {playBtn()}
                 <ArrowGrid arrowClick={arrowClicked} />
             </div>
         </div>

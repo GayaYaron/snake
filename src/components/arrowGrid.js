@@ -11,7 +11,7 @@ export function ArrowGrid(props) {
 
     return (
         <div className="container">
-            <div className="row">
+            <div className="row mb-1">
                 <div className="col" />
                 {buttonCol("U", "/upArrow.png")}
                 <div className="col" />
