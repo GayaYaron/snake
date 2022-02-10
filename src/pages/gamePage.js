@@ -11,22 +11,22 @@ export function GamePage(props) {
     const cols = 17;
     const rows = 17;
     const boardSize = cols * rows;
+    let gamePlayed = false;
 
     useEffect(() => {
         if (currentPosition?.playing) {
-            console.log(currentPosition);
             setTimeout(move, currentPosition.delay);
         }
     }, [currentPosition]);
 
-    const setInitialValues = () => {
-        setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000, false))
+    const setInitialValues = (play) => {
+        setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000, play))
         setDirection("R");
     };
 
     const createCells = () => {
         if (currentPosition === null) {
-            setInitialValues();
+            setInitialValues(false);
             return (
                 <div>
                     Loading game...
@@ -98,7 +98,12 @@ export function GamePage(props) {
         }
         snakeCells.push(headNext);
         snakeCells = snakeCells.slice(tailIndex, snakeCells.length);
-        setCurrentPosition(new GamePosition(snakeCells, foodIndex, delayMillis, isAlive));
+        let finalPos = new GamePosition(snakeCells, foodIndex, delayMillis, isAlive);
+        if(!isAlive) {
+            endGame(finalPos);
+        }else {
+            setCurrentPosition(finalPos);
+        }
     }
 
     const isEmpty = (index) => {
@@ -124,18 +129,38 @@ export function GamePage(props) {
         const locationClass = "d-block mx-auto mb-2";
         return(
             currentPosition?.playing ? 
-            <button type="button" className={"btn btn-danger "+locationClass}>End Game</button> :
-            <button type="button" className={"btn btn-success "+locationClass} onClick={play}>Start Game</button>
+            <button type="button" className={"btn btn-danger "+locationClass} onClick={endGame}>End Game</button> :
+            <button type="button" className={"btn btn-success "+locationClass} onClick={startGame}>Start Game</button>
         )
     }
 
-    const play = () => {
-        setCurrentPosition({...currentPosition, playing:true})
+    const startGame = () => {
+        gamePlayed = true;
+        setCurrentPosition({...currentPosition, playing:true});
+    }
+
+    const endGame = (position) => {
+        if(position) {
+            setCurrentPosition({...position, playing:false});
+        }else {
+            setCurrentPosition({...currentPosition, playing:false});
+        }
+    }
+
+    const endBannerClass = () => {
+        if(gamePlayed && !currentPosition.playing){
+            return "fs-1 text-center redText position-absolute top-50 start-50 translate-middle";
+        }else {
+            return "d-none";
+        }
     }
  
     return (
         <div className="gamePage">
-            <div className="board">
+            <div className="board position-relative">
+                <div className={endBannerClass()}>
+                    Game Over
+                </div>
                 {createCells()}
             </div>
             <div className="mx-auto w-third">
