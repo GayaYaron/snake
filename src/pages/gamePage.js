@@ -7,17 +7,23 @@ import { ArrowGrid } from "../components/arrowGrid";
 export function GamePage(props) {
     const [currentPosition, setCurrentPosition] = useState(null);
     const [direction, setDirection] = useState("");
+    const [playCount, setPlayCount] = useState(0);
 
     const cols = 17;
     const rows = 17;
     const boardSize = cols * rows;
-    let gamePlayed = false;
 
     useEffect(() => {
         if (currentPosition?.playing) {
             setTimeout(move, currentPosition.delay);
         }
     }, [currentPosition]);
+
+    useEffect(() => {
+        if(playCount>0){
+            setInitialValues(true);
+        }
+    }, [playCount]);
 
     const setInitialValues = (play) => {
         setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000, play))
@@ -135,8 +141,8 @@ export function GamePage(props) {
     }
 
     const startGame = () => {
-        gamePlayed = true;
-        setCurrentPosition({...currentPosition, playing:true});
+        let currentCount = playCount;
+        setPlayCount(currentCount+1);
     }
 
     const endGame = (position) => {
@@ -148,7 +154,8 @@ export function GamePage(props) {
     }
 
     const endBannerClass = () => {
-        if(gamePlayed && !currentPosition.playing){
+        let notPlaying = !(currentPosition?.playing);
+        if(playCount>0 && notPlaying){
             return "fs-1 text-center redText position-absolute top-50 start-50 translate-middle";
         }else {
             return "d-none";
