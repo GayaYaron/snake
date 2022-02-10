@@ -11,6 +11,7 @@ export function GamePage(props) {
     const cols = 17;
     const rows = 17;
     const boardSize = cols * rows;
+    const initialPos = new GamePosition([226, 227, 228], 197, 1000);
     let direction = "R";
 
     useEffect(() => {
@@ -20,19 +21,19 @@ export function GamePage(props) {
             } else {
                 endGame();
             }
-        } else if (status === "READY") {
-            setInitialValues();
+        } else if ((status==="LOADING" || status==="OVER") && Object.is(initialPos, currentPosition)) {
+            setStatus("READY");
         }
     }, [currentPosition, status]);
 
     const setInitialValues = () => {
         direction = "R";
-        setCurrentPosition(new GamePosition([226, 227, 228], 197, 1000))
+        setCurrentPosition(initialPos)
     };
 
     const createCells = () => {
         if (status === "LOADING") {
-            readyGame();
+            setInitialValues();
             return (
                 <div>
                     Loading game...
@@ -144,7 +145,7 @@ export function GamePage(props) {
                 )
             default:
                 return (
-                    <button type="button" className={"btn btn-success " + locationClass} onClick={readyGame}>Reset</button>
+                    <button type="button" className={"btn btn-success " + locationClass} onClick={setInitialValues}>Reset</button>
                 )
         }
 
@@ -156,10 +157,6 @@ export function GamePage(props) {
 
     const endGame = () => {
         setStatus("OVER");
-    }
-
-    const readyGame = () => {
-        setStatus("READY");
     }
 
     const endBannerClass = () => {
