@@ -114,10 +114,10 @@ export function GamePage(props) {
     }
 
     const generateFood = () => {
-        let randomPlace = Math.floor(Math.random() * boardSize);
-        while (!isEmpty(randomPlace)) {
-            randomPlace = Math.random() * boardSize;
-        }
+        let randomPlace;
+        do {
+            randomPlace = Math.floor(Math.random() * boardSize);
+        } while (!isEmpty(randomPlace));
         return randomPlace;
     }
 
