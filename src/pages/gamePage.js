@@ -6,21 +6,26 @@ import { ArrowGrid } from "../components/arrowGrid";
 
 export function GamePage(props) {
     const [currentPosition, setCurrentPosition] = useState(null);
+    const [timer, setTimer] = useState(null);
+    const [direction, setDirection] = useState("R");
 
     const cols = 17;
     const rows = 17;
     const boardSize = cols * rows;
     const initialPos = new GamePosition([226, 227, 228], 197, 1000, "READY");
-    let direction = "R";
 
     useEffect(() => {
-        if (currentPosition?.status === "PLAY") {
-            setTimeout(move, currentPosition.delay);
+        if(currentPosition?.status === "OVER" && timer !== null) {
+            clearTimeout(timer);
+            setTimer(null);
+        } else if (currentPosition?.status === "PLAY") {
+            setTimer(setTimeout(move, currentPosition.delay))
+        } else if(currentPosition?.status === "READY" && direction !== "R") {
+            setDirection("R");
         }
     }, [currentPosition]);
 
     const setInitialValues = () => {
-        direction = "R";
         setCurrentPosition(initialPos)
     };
 
@@ -94,7 +99,7 @@ export function GamePage(props) {
             tailIndex = 0;
             foodIndex = generateFood();
             delayMillis *= 0.9;
-        }else if (isBorder(headNext) || currentPosition.snake.includes(headNext)) {
+        } else if (isBorder(headNext) || currentPosition.snake.includes(headNext)) {
             status = "OVER";
         }
 
@@ -119,8 +124,8 @@ export function GamePage(props) {
     const arrowClicked = (arrow) => {
         let arrowIsDirection = ("R" === arrow || "L" === arrow || "U" === arrow || "D" === arrow);
         if (arrowIsDirection && currentPosition.status === "PLAY") {
-            if(nextHeadCell(arrow) !== currentPosition.snake[currentPosition.snake.length-2]) {
-                direction = arrow;
+            if (nextHeadCell(arrow) !== currentPosition.snake[currentPosition.snake.length - 2]) {
+                setDirection(arrow);
             }
         }
     }
@@ -145,15 +150,17 @@ export function GamePage(props) {
     }
 
     const startGame = () => {
-        setCurrentPosition({...currentPosition, status : "PLAY"});
+        setCurrentPosition({ ...currentPosition, status: "PLAY" });
     }
 
     const endGame = () => {
-        setCurrentPosition({...currentPosition, status : "OVER"});
+        setCurrentPosition({ ...currentPosition, status: "OVER" });
     }
 
     const endBannerClass = () => {
-        return (currentPosition?.status === "OVER") ? "fs-1 text-center redText position-absolute top-50 start-50 translate-middle" : "d-none";
+        return (currentPosition?.status === "OVER") ?
+            "fs-1 text-center redText position-absolute top-50 start-50 translate-middle bg-white" :
+            "d-none";
     }
 
     return (
