@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import { GeneralPage } from './pages/generalPage';
+import { GamePage } from './pages/gamePage';
 
 function App() {
   return (
     <div>
-      <GeneralPage />
+      <GamePage />
     </div>
   );
 }
