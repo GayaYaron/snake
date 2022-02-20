@@ -25,6 +25,10 @@
     background-color: gray;
 }
 
+.backLightGrey {
+    background-color: #D3D3D3;
+}
+
 .gamePage {
     margin-top: 5px;
     display: grid;
