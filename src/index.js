@@ -7,12 +7,15 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from "redux";
 import reducers from "./redux/reducers";
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={createStore(reducers)}>
-      <App />
-    </Provider>
+    <BrowserRouter forceRefresh={true}>
+      <Provider store={createStore(reducers)}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

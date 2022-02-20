@@ -1,11 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { HomePage } from './pages/homePage';
 import { GamePage } from './pages/gamePage';
 
 function App() {
   return (
     <div>
-      <GamePage />
+      <Routes>
+        <Route path={"/"} element={<HomePage />}>
+          <Route path="" element={<GamePage />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
