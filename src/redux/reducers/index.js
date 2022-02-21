@@ -13,6 +13,21 @@ const gameColorsReducer = (currentState = {border: "backBlack", snake: "backGrey
     }
 }
 
+const loginReducer = (currentState = {info: null, error: null}, action) => {
+    const state = {...currentState, error: null};
+    switch (action.type) {
+        case "LOG/IN":
+            return {...state, info: action.payload};
+        case "LOG/OUT":
+            return {...state, info: null};
+        case "LOG/ERROR":
+            return {...state, error: action.payload};
+        default:
+            return currentState;
+    }
+}
+
 export default combineReducers({
-    gameColors : gameColorsReducer
+    gameColors : gameColorsReducer,
+    login : loginReducer
 })
