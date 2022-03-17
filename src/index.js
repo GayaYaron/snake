@@ -5,14 +5,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { createStore } from "redux";
-import reducers from "./redux/reducers";
 import { BrowserRouter } from 'react-router-dom';
+import store from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter forceRefresh={true}>
-      <Provider store={createStore(reducers)}>
+      <Provider store={store}>
         <App />
       </Provider>
     </BrowserRouter>
