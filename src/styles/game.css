@@ -55,3 +55,9 @@
 .arrowBtn:hover {
     box-shadow: 0 0 2px 1px black;
 }
+
+.centerContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
