@@ -24,53 +24,34 @@ function LoginFormComp(props) {
 
     useEffect(() => {
         if (props.loginInfo.info) {
-            navigate(`/${props.loginInfo.info.clientType}`);
+            navigate("main");
         }
     });
 
-    const validateEmail = (event) => {
-        const validEmailExpression = /^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$/;
-        const email = "" + event.target.value;
-        let status = "";
-        if (email === "" || email === null) {
-            status = "null error";
-        } else if (!validEmailExpression.test(String(email).toLowerCase())) {
-            status = "invalid email error";
-        } else {
-            status = "valid";
-        }
-        setEmail(email)
-        setEmailStatus(status);
+    const validateInput = (input) => {
+        return (input === "" || input === null) ? "null error" : "valid";
+    };
+
+    const validateNickname = (event) => {
+        let name = event.target.value;
+        setNickname(name);
+        setNicknameStatus(validateInput(name));
     };
 
     const validatePassword = (event) => {
-        const password = event.target.value;
-        let status = ""
-        if (password === "" || password === null) {
-            status = "null error";
-        } else {
-            status = "valid";
-        }
-        setPassword(password)
-        setPasswordStatus(status);
+        let password = event.target.value;
+        setPassword(password);
+        setPasswordStatus(validateInput(password));
     };
 
     const statusIsValid = (status) => {
         return status === "" || status === "valid";
     }
 
-    const emailError = () => {
-        switch (emailStatus) {
-            case "null error":
-                return "You must enter an email";
-            case "invalid email error":
-                return "Email is invalid, please enter a valid email address";
-            default:
-                return null;
+    const fieldError = (fieldName) => {
+        if(fieldName === "nickname") {
+            return (nicknameStatus === "null error") ? "You must enter a nickname" : null;
         }
-    }
-
-    const passwordError = () => {
         return (passwordStatus === "null error") ? "You must enter a password" : null;
     }
 
@@ -80,14 +61,13 @@ function LoginFormComp(props) {
                 <h1>Login</h1>
             </div>
             <form onSubmit={onSubmit}>
-                <FormQuestion name="email" type="text" valid={statusIsValid(emailStatus)} placeholder="Enter email" value={email}
-                    onChange={validateEmail} errorMessage={emailError()} quesType="input" />
+                <FormQuestion name="nickname" type="text" valid={statusIsValid(nicknameStatus)} placeholder="Nickname" value={nickname}
+                    onChange={validateNickname} errorMessage={fieldError("nickname")} quesType="input" />
                 <FormQuestion name="password" type="password" valid={statusIsValid(passwordStatus)} placeholder="Password" value={password}
-                    onChange={validatePassword} errorMessage={passwordError()} quesType="input" />
-                <FormQuestion quesType="select" name="userType" options={["admin","company","customer"]} />
+                    onChange={validatePassword} errorMessage={fieldError("password")} quesType="input" />
                 <ServerError error={props.loginInfo.error} />
-                <SubmitButton disabled={emailStatus !== "valid" || passwordStatus !== "valid"}
-                    text="Submit" />
+                <SubmitButton disabled={nicknameStatus !== "valid" || passwordStatus !== "valid"}
+                    text="Login" />
                 <br />
             </form>
         </div>
