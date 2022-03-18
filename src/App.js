@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { HomePage } from './pages/homePage';
-import { GamePage } from './pages/gamePage';
+import { HomePage } from './pages/HomePage';
+import { GamePage } from './pages/GamePage';
 
 function App() {
   return (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Cell } from "../components/cell";
+import { Cell } from "../components/Cell";
 import "../styles/game.css"
 import { GamePosition } from "../model/GamePosition";
-import { ArrowGrid } from "../components/arrowGrid";
+import { ArrowGrid } from "../components/ArrowGrid";
 
 export function GamePage(props) {
     const [currentPosition, setCurrentPosition] = useState(null);
