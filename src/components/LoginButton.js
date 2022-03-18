@@ -15,11 +15,11 @@ function LoginButtonComp(props) {
 
     if(props.loginInfo.info) {
         return(
-            <button type="button" className={props.btnClass} onClick={logoutClicked}>Logout</button>
+            <button type="button" className={"btn btn-light "+props.btnClass} onClick={logoutClicked}>Logout</button>
         );
     }else {
         return(
-            <button type="button" className={props.btnClass} onClick={goToLogin}>Login/Register</button>
+            <button type="button" className={"btn btn-success "+props.btnClass} onClick={goToLogin}>Login/Register</button>
         );
     };
 }

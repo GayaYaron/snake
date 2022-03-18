@@ -34,10 +34,8 @@ export function MainMenu(props) {
                 <ul className="navbar-nav me-auto mt-2 mt-lg-0 align-items-center">
                     {turnItemsToList()}
                 </ul>
-                
+                <LoginButton pathBack="../" btnClass="ms-auto mx-2" />
             </div>
         </nav>
     );
 }
-
-// add login button after list atyle-> <LoginButton path="login" btnClass="btn btn-secondary ms-auto mx-2" />
