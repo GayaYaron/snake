@@ -76,7 +76,7 @@ function LoginFormComp(props) {
 
 const mapStateToProps = (state) => {
     return {
-        loginInfo: state.loginInfo
+        loginInfo: state.login
     };
 };
 

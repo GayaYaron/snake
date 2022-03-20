@@ -67,4 +67,14 @@
     background-color: white;
     border-radius: 30px;
     box-shadow: 15px 15px #00000018;
+    border: 1px solid #00000018;
+}
+
+.imgButton {
+    display: block;
+    width: 5rem;
+}
+
+.imgButton:hover {
+    box-shadow: 1.5px 1.5px #00000018;
 }
