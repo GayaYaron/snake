@@ -9,7 +9,7 @@ function App() {
     <div>
       <Routes>
         <Route path="login" element={<LoginPage />} />
-        <Route path="main" element={<HomePage />}>
+        <Route path={"/"} element={<HomePage />}>
           <Route path="" element={<GamePage />} />
         </Route>
       </Routes>
@@ -18,3 +18,5 @@ function App() {
 }
 
 export default App;
+
+//
