@@ -3,8 +3,10 @@ import { Cell } from "../components/Cell";
 import "../styles/game.css"
 import { GamePosition } from "../model/GamePosition";
 import { ArrowGrid } from "../components/ArrowGrid";
+import { connect } from "react-redux";
+import { login } from "../redux/actions";
 
-export function GamePage(props) {
+function GamePageComp(props) {
     const [currentPosition, setCurrentPosition] = useState(null);
     const [timer, setTimer] = useState(null);
     const [direction, setDirection] = useState("R");
@@ -169,6 +171,10 @@ export function GamePage(props) {
         return currentPosition? currentPosition.score: 0;
     }
 
+    const scoreOrCoins = () => {
+        return (loginInfo.info && currentPosition?.status === "READY") ? "Coins" : "Score";
+    }
+
     return (
         <div className='d-flex justify-content-evenly mt-2'>
             <div />
@@ -188,7 +194,7 @@ export function GamePage(props) {
             </div>
             <div className='text-center'>
                 <h5>
-                    SCORE
+                    {scoreOrCoins()}
                 </h5>
                 <p>
                     {getScore()}
@@ -197,3 +203,17 @@ export function GamePage(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loginInfo : state.login
+    };
+};
+
+const mapDispatchActions = () => {
+    return {
+
+    };
+};
+
+export const GamePage = connect(mapStateToProps, mapDispatchActions())(GamePageComp);
