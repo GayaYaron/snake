@@ -168,7 +168,8 @@ function GamePageComp(props) {
     }
 
     const getScore = () => {
-        return currentPosition? currentPosition.score: 0;
+        let coins = (scoreOrCoins==="Coins");
+        return coins ? loginInfo.info.userCoins : (currentPosition? currentPosition.score: 0);
     }
 
     const scoreOrCoins = () => {
