@@ -10,7 +10,7 @@ class AuthApi {
             .interceptors
             .request
             .use(config => {
-                config.baseURL = "http://localhost:8080/";
+                config.baseURL = "http://localhost:8080/user/";
                 config.headers = this.getHeaders();
                 return config;
             });
@@ -33,7 +33,7 @@ class GeneralApi {
     
     constructor() {
         this.api = axios.create({
-            baseURL: 'http://localhost:8080/user/'
+            baseURL: 'http://localhost:8080/'
         });
     };
 

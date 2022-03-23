@@ -65,7 +65,7 @@ function LoginFormComp(props) {
                     onChange={validateNickname} errorMessage={fieldError("nickname")} quesType="input" />
                 <FormQuestion name="password" type="password" valid={statusIsValid(passwordStatus)} placeholder="Password" value={password}
                     onChange={validatePassword} errorMessage={fieldError("password")} quesType="input" />
-                <ServerError error={props.loginInfo.error} />
+                <ServerError error={props.loginInfo.error} sender="LOGIN" />
                 <SubmitButton disabled={nicknameStatus !== "valid" || passwordStatus !== "valid"}
                     text="Login" />
                 <br />

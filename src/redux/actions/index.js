@@ -1,4 +1,5 @@
-import { generalApi } from "../../service/apiService";
+import { generalApi, authApi } from "../../service/apiService";
+import { ByError } from "../../model/ByError";
 
 export const login = (nickname, password) => async (dispatch) => {
     const body = {
@@ -9,7 +10,7 @@ export const login = (nickname, password) => async (dispatch) => {
         const response = await generalApi.post("user/login", body);
         dispatch(addLoginDataToState(response.data.jwtToken, response.data.id, response.data.nickname, response.data.expiration, response.data.chsenDesign, response.data.coins));
     } catch (err) {
-        dispatch(loginError(err));
+        dispatch(loginError(new ByError(err, "LOGIN")));
     }
 
 }
@@ -63,6 +64,20 @@ export const setFoodColor = (color) => {
     }
 }
 
-export const addCoins = (amount) => {
-    
+export const addCoins = (amount) => async (dispatch) => {
+    try {
+        const response = await authApi.put("coins", null, {params:{amount}});
+        if(response.status < 300) {
+            dispatch(addCoinsToState(amount));
+        }
+    } catch (err) {
+        dispatch(loginError(new ByError(err, "ADD-COINS")))
+    }
+}
+
+export const addCoinsToState = (amount) => {
+    return {
+        type: "LOG/INFO-COINS",
+        payload: amount
+    }
 }
