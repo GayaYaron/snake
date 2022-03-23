@@ -62,3 +62,7 @@ export const setFoodColor = (color) => {
         payload: color
     }
 }
+
+export const addCoins = (amount) => {
+    
+}
