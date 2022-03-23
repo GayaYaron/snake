@@ -20,6 +20,9 @@ const loginReducer = (currentState = {info: null, error: null}, action) => {
             return {...state, info: action.payload};
         case "LOG/OUT":
             return {...state, info: null};
+        case "LOG/INFO-COINS":
+            let coins = state.info.userCoins + action.payload;
+            return {...state, info: {...info, userCoins: coins}};
         case "LOG/ERROR":
             return {...state, error: action.payload};
         default:

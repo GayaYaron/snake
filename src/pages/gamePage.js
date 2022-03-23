@@ -20,6 +20,7 @@ function GamePageComp(props) {
         if (currentPosition?.status === "OVER" && timer !== null) {
             clearTimeout(timer);
             setTimer(null);
+            
         } else if (currentPosition?.status === "PLAY") {
             setTimer(setTimeout(move, currentPosition.delay))
         } else if (currentPosition?.status === "READY" && direction !== "R") {
