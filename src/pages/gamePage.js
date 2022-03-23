@@ -4,7 +4,7 @@ import "../styles/game.css"
 import { GamePosition } from "../model/GamePosition";
 import { ArrowGrid } from "../components/ArrowGrid";
 import { connect } from "react-redux";
-import { login } from "../redux/actions";
+
 
 function GamePageComp(props) {
     const [currentPosition, setCurrentPosition] = useState(null);
@@ -20,7 +20,7 @@ function GamePageComp(props) {
         if (currentPosition?.status === "OVER" && timer !== null) {
             clearTimeout(timer);
             setTimer(null);
-            
+            props.addCoins(currentPosition.score);
         } else if (currentPosition?.status === "PLAY") {
             setTimer(setTimeout(move, currentPosition.delay))
         } else if (currentPosition?.status === "READY" && direction !== "R") {
@@ -174,7 +174,7 @@ function GamePageComp(props) {
     }
 
     const scoreOrCoins = () => {
-        return (loginInfo.info && currentPosition?.status === "READY") ? "Coins" : "Score";
+        return (loginInfo.info && currentPosition?.status === "OVER") ? "Coins" : "Score";
     }
 
     return (
@@ -214,7 +214,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchActions = () => {
     return {
-
+        addCoins
     };
 };
 
