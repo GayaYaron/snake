@@ -68,16 +68,16 @@ export const addCoins = (amount) => async (dispatch) => {
     try {
         const response = await authApi.put("coins", null, {params:{amount}});
         if(response.status < 300) {
-            dispatch(addCoinsToState(amount));
+            dispatch(setCoins(response.data));
         }
     } catch (err) {
         dispatch(loginError(new ByError(err, "ADD-COINS")))
     }
 }
 
-export const addCoinsToState = (amount) => {
+export const setCoins = (coins) => {
     return {
         type: "LOG/INFO-COINS",
-        payload: amount
+        payload: coins
     }
 }
