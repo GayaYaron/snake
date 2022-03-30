@@ -33,35 +33,6 @@ function GamePageComp(props) {
         setCurrentPosition(initialPos)
     };
 
-    // const createCells = () => {
-    //     if (currentPosition === null) {
-    //         setInitialValues();
-    //         return (
-    //             <div>
-    //                 Loading game...
-    //             </div>
-    //         )
-    //     } else {
-    //         const cellArr = [];
-    //         for (let i = 0; i < boardSize; i++) {
-    //             cellArr.push(<Cell key={i} role={getRole(i)} />);
-    //         }
-    //         return cellArr;
-    //     }
-    // };
-
-    // const getRole = (index) => {
-    //     if (currentPosition.food === index) {
-    //         return "FOOD";
-    //     } else if (currentPosition.snake.includes(index)) {
-    //         return "SNAKE";
-    //     } else if (isBorder(index)) {
-    //         return "BORDER";
-    //     } else {
-    //         return "EMPTY";
-    //     }
-    // }
-
     const isBorder = (index) => {
         const insideBoard = (index >= 0) && (index < boardSize);
         const isTopRow = index < cols;
