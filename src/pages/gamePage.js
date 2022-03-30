@@ -5,6 +5,7 @@ import { ArrowGrid } from "../components/ArrowGrid";
 import { connect } from "react-redux";
 import { CellBoard } from "../components/CellsBoard";
 import { addCoins } from "../redux/actions/index";
+import { indexIsBorder } from "../service/borderService";
 
 
 function GamePageComp(props) {
@@ -34,13 +35,7 @@ function GamePageComp(props) {
     };
 
     const isBorder = (index) => {
-        const insideBoard = (index >= 0) && (index < boardSize);
-        const isTopRow = index < cols;
-        const isLeftCol = index % cols === 0;
-        const isBottomRow = index > cols * (rows - 1);
-        const isRightCol = (index + 1) % cols === 0;
-
-        return insideBoard && (isTopRow || isLeftCol || isBottomRow || isRightCol);
+        return indexIsBorder(index, boardSize, cols, rows);
     }
 
     const nextHeadCell = (checkDirec) => {
