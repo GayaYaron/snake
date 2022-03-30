@@ -12,7 +12,7 @@
 .miniBoard {
     max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(8, auto);
 }
 
 .backBlack {
