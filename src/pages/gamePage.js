@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Cell } from "../components/Cell";
 import "../styles/game.css"
 import { GamePosition } from "../model/GamePosition";
 import { ArrowGrid } from "../components/ArrowGrid";
 import { connect } from "react-redux";
 import { CellBoard } from "../components/CellsBoard";
+import { addCoins } from "../redux/actions/index";
 
 
 function GamePageComp(props) {
@@ -171,11 +171,11 @@ function GamePageComp(props) {
 
     const getScore = () => {
         let coins = (scoreOrCoins==="Coins");
-        return coins ? loginInfo.info.userCoins : (currentPosition? currentPosition.score: 0);
+        return coins ? props.loginInfo.info.userCoins : (currentPosition? currentPosition.score: 0);
     }
 
     const scoreOrCoins = () => {
-        return (loginInfo.info && currentPosition?.status === "OVER") ? "Coins" : "Score";
+        return (props.loginInfo.info && currentPosition?.status === "OVER") ? "Coins" : "Score";
     }
 
     const getCellColor = (index) => {

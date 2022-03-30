@@ -1,7 +1,7 @@
 import "../styles/game.css";
 import { connect } from "react-redux";
 
-function CellComp(props) {
+export function Cell(props) {
     const getCellClass = () => {
         // let classString = "cell ";
         // if (props.cellColor) {
@@ -23,6 +23,6 @@ function CellComp(props) {
     }
 
     return (
-        <div className={"cell " + props.color}></div>
+        <div className={"cell " + props.color} />
     )
 }

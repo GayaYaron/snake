@@ -1,3 +1,5 @@
+import { Cell } from "./Cell"
+
 export function CellBoard(props) {
     if (props.needsLoading) {
         props.load();
