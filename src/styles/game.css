@@ -9,6 +9,12 @@
     grid-template-columns: repeat(17, auto);
 }
 
+.miniBoard {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+}
+
 .backBlack {
     background-color: black;
 }

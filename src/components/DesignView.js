@@ -1,6 +1,8 @@
+import "../styles/game.css"
+
 export function DesignView(props) {
     return(
-        <div>
+        <div className="miniBoard">
             
         </div>
     )

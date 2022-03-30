@@ -3,28 +3,26 @@ import { connect } from "react-redux";
 
 function CellComp(props) {
     const getCellClass = () => {
-        let classString = "cell ";
-        switch (props.role) {
-            case "BORDER":
-                return classString + props.colors.border;
-            case "FOOD":
-                return classString + props.colors.food;
-            case "SNAKE":
-                return classString + props.colors.snake;
-            default:
-                return classString + "backDefault";
-        }
+        // let classString = "cell ";
+        // if (props.cellColor) {
+        //     return classString + cellColor;
+        // } else {
+        //     switch (props.role) {
+        //         case "BORDER":
+        //             return classString + props.colors.border;
+        //         case "FOOD":
+        //             return classString + props.colors.food;
+        //         case "SNAKE":
+        //             return classString + props.colors.snake;
+        //         default:
+        //             return classString + "backDefault";
+        //     }
+        // }
+
+        return "cell " + props.color;
     }
 
     return (
-        <div className={getCellClass()}></div>
+        <div className={"cell " + props.color}></div>
     )
 }
-
-const mapStateToProps = (state) => {
-    return {
-        colors : state.gameColors
-    }
-}
-
-export const Cell = connect(mapStateToProps)(CellComp);

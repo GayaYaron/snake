@@ -4,6 +4,7 @@ import "../styles/game.css"
 import { GamePosition } from "../model/GamePosition";
 import { ArrowGrid } from "../components/ArrowGrid";
 import { connect } from "react-redux";
+import { CellBoard } from "../components/CellsBoard";
 
 
 function GamePageComp(props) {
@@ -32,34 +33,34 @@ function GamePageComp(props) {
         setCurrentPosition(initialPos)
     };
 
-    const createCells = () => {
-        if (currentPosition === null) {
-            setInitialValues();
-            return (
-                <div>
-                    Loading game...
-                </div>
-            )
-        } else {
-            const cellArr = [];
-            for (let i = 0; i < boardSize; i++) {
-                cellArr.push(<Cell key={i} role={getRole(i)} />);
-            }
-            return cellArr;
-        }
-    };
+    // const createCells = () => {
+    //     if (currentPosition === null) {
+    //         setInitialValues();
+    //         return (
+    //             <div>
+    //                 Loading game...
+    //             </div>
+    //         )
+    //     } else {
+    //         const cellArr = [];
+    //         for (let i = 0; i < boardSize; i++) {
+    //             cellArr.push(<Cell key={i} role={getRole(i)} />);
+    //         }
+    //         return cellArr;
+    //     }
+    // };
 
-    const getRole = (index) => {
-        if (currentPosition.food === index) {
-            return "FOOD";
-        } else if (currentPosition.snake.includes(index)) {
-            return "SNAKE";
-        } else if (isBorder(index)) {
-            return "BORDER";
-        } else {
-            return "EMPTY";
-        }
-    }
+    // const getRole = (index) => {
+    //     if (currentPosition.food === index) {
+    //         return "FOOD";
+    //     } else if (currentPosition.snake.includes(index)) {
+    //         return "SNAKE";
+    //     } else if (isBorder(index)) {
+    //         return "BORDER";
+    //     } else {
+    //         return "EMPTY";
+    //     }
+    // }
 
     const isBorder = (index) => {
         const insideBoard = (index >= 0) && (index < boardSize);
@@ -177,6 +178,18 @@ function GamePageComp(props) {
         return (loginInfo.info && currentPosition?.status === "OVER") ? "Coins" : "Score";
     }
 
+    const getCellColor = (index) => {
+        if(currentPosition.food === index) {
+            return props.colors.food;
+        }else if(currentPosition.snake.includes(index)) {
+            return props.colors.snake;
+        }else if(isBorder(index)) {
+            return props.colors.border;
+        }else {
+            return "backDefault";
+        }
+    } 
+
     return (
         <div className='d-flex justify-content-evenly mt-2'>
             <div />
@@ -186,7 +199,7 @@ function GamePageComp(props) {
                         <div className={endBannerClass()}>
                             Game Over
                         </div>
-                        {createCells()}
+                        <CellBoard  needsLoading={currentPosition === null} load={setInitialValues} boardSize={boardSize} getCellColor={getCellColor}/>
                     </div>
                     <div className="mx-auto w-third">
                         <ArrowGrid arrowClick={arrowClicked} />
@@ -208,7 +221,8 @@ function GamePageComp(props) {
 
 const mapStateToProps = (state) => {
     return {
-        loginInfo : state.login
+        loginInfo : state.login,
+        colors: state.gameColors
     };
 };
 
