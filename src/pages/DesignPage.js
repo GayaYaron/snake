@@ -1,5 +1,5 @@
 function DesignPageComp(props) {
-    <div>
+    <div className="mx-4">
         <h3 className="text-center mb-2">Your Designs</h3>
         
     </div>
