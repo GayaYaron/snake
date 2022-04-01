@@ -1,5 +1,6 @@
 import { generalApi, authApi } from "../../service/apiService";
 import { ByError } from "../../model/ByError";
+import { Design } from "../../model/Design";
 
 export const login = (nickname, password) => async (dispatch) => {
     const body = {
@@ -79,5 +80,33 @@ export const setCoins = (coins) => {
     return {
         type: "LOG/INFO-COINS",
         payload: coins
+    }
+}
+
+export const loadUserDesigns = () => async (dispatch) => {
+    try{
+    const response = await authApi.get("/design/all");
+    const designs = response.data.map(json => turnJsonToDesign(json));
+    dispatch(setUserDesigns(designs));
+    } catch(err) {
+        dispatch(designsError(err));
+    }
+}
+
+const turnJsonToDesign = (json) => {
+    return new Design(json.id, json.name, json.snakeColor, json.borderColor, json.foodColor);
+}
+
+export const setUserDesigns = (designs) => {
+    return {
+        type: "DESIGN/SET",
+        payload: designs
+    }
+}
+
+export const designsError = (err) => {
+    return {
+        type: "DESIGN/ERROR",
+        payload: err
     }
 }

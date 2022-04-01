@@ -29,7 +29,20 @@ const loginReducer = (currentState = {info: null, error: null}, action) => {
     }
 }
 
+const designReducer = (currentState = {designs: null, error: null}, action) => {
+    const state = {...currentState, error: null};
+    switch (action.type) {
+        case "DESIGN/SET":
+            return {...state, designs: action.payload};
+        case "DESIGN/ERROR":
+            return {...state, error: action.payload};
+        default:
+            return currentState;
+    }
+}
+
 export default combineReducers({
     gameColors : gameColorsReducer,
-    login : loginReducer
+    login : loginReducer,
+    designs : designReducer
 })
