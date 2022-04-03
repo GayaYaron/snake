@@ -1,7 +1,22 @@
+import { DesignView } from "../components/DesignView"
+
 function DesignPageComp(props) {
     const userDesigns = () => {
-        //map designs from props to views, add "add design" if necessary
+        const divClass = "col-2 col-sm-3";
+        let designList = props.designs.map(design =>
+            <div key={design.id+""} className={divClass}>
+                <DesignView design={design} />
+            </div>)
+
+        if (designList < 5) {
+            designList.push(<div key="add" className={divClass}>
+                <img src="/plus.png" className="d-block w-full" alt="add design" onClick={()=>{}} />
+            </div>)
+        }
+        return designList;
     }
+
+    //add on click for add design
 
     const designsOrNote = () => {
         if (!props.loginInfo.info) {

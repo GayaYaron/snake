@@ -4,7 +4,7 @@ export function ArrowGrid(props) {
     const buttonCol = (direction, imgSrc) => {
         return (
             <div className="col">
-                <img src={imgSrc} className="arrowBtn w-full" alt={direction} onClick={() => { props.arrowClick(direction) }} />
+                <img src={imgSrc} className="d-block w-full" alt={direction} onClick={() => { props.arrowClick(direction) }} />
             </div>
         )
     }
