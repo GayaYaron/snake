@@ -17,6 +17,7 @@ function DesignPageComp(props) {
     }
 
     //add on click for add design
+    //add load designs if needed
 
     const designsOrNote = () => {
         if (!props.loginInfo.info) {

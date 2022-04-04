@@ -112,5 +112,11 @@ export const designsError = (err) => {
 }
 
 export const loadUserColors = () => async (dispatch) => {
-
+    try{
+        const response = await authApi.get("/colors");
+        const designs = response.data.map(json => turnJsonToDesign(json));
+        dispatch(setUserDesigns(designs));
+        } catch(err) {
+            dispatch(designsError(err));
+        }
 }
