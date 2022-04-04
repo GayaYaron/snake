@@ -1,9 +1,9 @@
 import { DesignView } from "../../components/DesignView"
 
 function DesignPageComp(props) {
-    const userDesigns = () => {
+    const userDesigns = (designs) => {
         const divClass = "col-2 col-sm-3";
-        let designList = props.designs.map(design =>
+        let designList = designs.map(design =>
             <div key={design.id+""} className={divClass}>
                 <DesignView design={design} />
             </div>)
