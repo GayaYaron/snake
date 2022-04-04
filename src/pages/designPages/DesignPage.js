@@ -1,4 +1,4 @@
-import { DesignView } from "../components/DesignView"
+import { DesignView } from "../../components/DesignView"
 
 function DesignPageComp(props) {
     const userDesigns = () => {
