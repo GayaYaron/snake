@@ -1,6 +1,7 @@
 import { generalApi, authApi } from "../../service/apiService";
 import { ByError } from "../../model/ByError";
 import { Design } from "../../model/Design";
+import { ColorPack } from "../../model/ColorPack";
 
 export const login = (nickname, password) => async (dispatch) => {
     const body = {
@@ -114,9 +115,27 @@ export const designsError = (err) => {
 export const loadUserColors = () => async (dispatch) => {
     try{
         const response = await authApi.get("/colors");
-        const designs = response.data.map(json => turnJsonToDesign(json));
+        const designs = response.data.map(json => turnJsonToColorPack(json));
         dispatch(setUserDesigns(designs));
         } catch(err) {
             dispatch(designsError(err));
         }
+}
+
+const turnJsonToColorPack = (json) => {
+    return new ColorPack(json.id, json.price, json.type+"", json.colors);
+}
+
+export const setUserColors = (userColors) => {
+    return {
+        type: "USER_COLOR/SET",
+        payload: userColors
+    }
+}
+
+export const userColorsError = (err) => {
+    return {
+        type: "USER_COLOR/ERROR",
+        payload: err
+    }
 }
