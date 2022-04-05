@@ -90,7 +90,7 @@ export const loadUserDesigns = () => async (dispatch) => {
     const designs = response.data.map(json => turnJsonToDesign(json));
     dispatch(setUserDesigns(designs));
     } catch(err) {
-        dispatch(designsError(err));
+        dispatch(designsError(new ByError(err, "LOAD-DESIGNS")));
     }
 }
 

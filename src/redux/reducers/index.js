@@ -56,5 +56,6 @@ const userColorsReducer = (currentState = { colors: null, error: null }, action)
 export default combineReducers({
     gameColors: gameColorsReducer,
     login: loginReducer,
-    designs: designReducer
+    designs: designReducer,
+    userColors: userColorsReducer
 })

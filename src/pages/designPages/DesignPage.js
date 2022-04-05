@@ -1,4 +1,6 @@
-import { DesignView } from "../../components/DesignView"
+import { DesignView } from "../../components/DesignView";
+import { loadUserDesigns } from "../../redux/actions";
+import { ServerError } from "../../components/ServerError";
 
 function DesignPageComp(props) {
     const userDesigns = (designs) => {
@@ -16,8 +18,20 @@ function DesignPageComp(props) {
         return designList;
     }
 
+    const loadDesigns = () => {
+        const designsInfo = props.designsInfo;
+        if(designsInfo.designs) {
+            return userDesigns(designsInfo.designs);
+        }else if(designsInfo.error?.by === "LOAD-DESIGNS") {
+            return(<ServerError error={designsInfo.error} sender="LOAD-DESIGNS" />);
+        }else {
+            loadUserDesigns();
+            return(<p>Loading your designs...</p>);
+        }
+        
+    }
+
     //add on click for add design
-    //add load designs if needed
 
     const designsOrNote = () => {
         if (!props.loginInfo.info) {
@@ -29,7 +43,7 @@ function DesignPageComp(props) {
         } else {
             <div>
                 <div className="d-flex flex-wrap justify-content-center mx-2 my-1">
-                    {userDesigns()}
+                    {loadDesigns()}
                 </div>
             </div>
         }
@@ -45,13 +59,13 @@ function DesignPageComp(props) {
 
 const mapStateToProps = (state) => {
     return {
-        loginInfo: state.login
+        designsInfo: state.designs
     };
 };
 
 const mapDispatchActions = () => {
     return {
-
+        loadUserDesigns
     };
 };
 
