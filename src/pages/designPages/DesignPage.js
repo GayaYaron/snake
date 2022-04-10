@@ -1,8 +1,15 @@
 import { DesignView } from "../../components/DesignView";
 import { loadUserDesigns } from "../../redux/actions";
 import { ServerError } from "../../components/ServerError";
+import { useNavigate } from "react-router-dom"
 
 function DesignPageComp(props) {
+    const navigate = useNavigate();
+
+    const addDesign = () => {
+        navigate("/add");
+    }
+
     const userDesigns = (designs) => {
         const divClass = "col-2 col-sm-3";
         let designList = designs.map(design =>
@@ -12,7 +19,7 @@ function DesignPageComp(props) {
 
         if (designList < 5) {
             designList.push(<div key="add" className={divClass}>
-                <img src="/plus.png" className="d-block w-full" alt="add design" onClick={()=>{}} />
+                <img src="/plus.png" className="d-block w-full" alt="add design" onClick={addDesign} />
             </div>)
         }
         return designList;
@@ -30,8 +37,6 @@ function DesignPageComp(props) {
         }
         
     }
-
-    //add on click for add design
 
     const designsOrNote = () => {
         if (!props.loginInfo.info) {
