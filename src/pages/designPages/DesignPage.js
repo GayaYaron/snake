@@ -2,6 +2,7 @@ import { DesignView } from "../../components/DesignView";
 import { loadUserDesigns } from "../../redux/actions";
 import { ServerError } from "../../components/ServerError";
 import { useNavigate } from "react-router-dom"
+import { authApi } from "../../service/apiService";
 
 function DesignPageComp(props) {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function DesignPageComp(props) {
     const userDesigns = (designs) => {
         const divClass = "col-2 col-sm-3";
         let designList = designs.map(design =>
-            <div key={design.id+""} className={divClass}>
+            <div key={design.id + ""} className={divClass}>
                 <DesignView design={design} />
             </div>)
 
@@ -27,15 +28,15 @@ function DesignPageComp(props) {
 
     const loadDesigns = () => {
         const designsInfo = props.designsInfo;
-        if(designsInfo.designs) {
+        if (designsInfo.designs) {
             return userDesigns(designsInfo.designs);
-        }else if(designsInfo.error?.by === "LOAD-DESIGNS") {
-            return(<ServerError error={designsInfo.error} sender="LOAD-DESIGNS" />);
-        }else {
+        } else if (designsInfo.error?.by === "LOAD-DESIGNS") {
+            return (<ServerError error={designsInfo.error} sender="LOAD-DESIGNS" />);
+        } else {
             loadUserDesigns();
-            return(<p>Loading your designs...</p>);
+            return (<p>Loading your designs...</p>);
         }
-        
+
     }
 
     const designsOrNote = () => {
@@ -52,6 +53,16 @@ function DesignPageComp(props) {
                 </div>
             </div>
         }
+    }
+
+    const loadColorPacks = () => {
+        authApi.get("/colors/all")
+            .then((response) => {
+
+            })
+            .catch((err) => {
+                
+            })
     }
 
     return (
